@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Diva - Indian Collection</title>
+<link href="final_files/css2.css" rel="stylesheet">
+<style>
+/* --- Professional Color Palette: Deep Teal (#004d40), Gold (#ffb300), Neutrals (#f8f8f8, #333) --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+
+body {
+    background: #f8f8f8; /* Light grey background */
+    color: #333;
+    transition: background 0.5s, color 0.5s;
+}
+
+header {
+    background: #004d40; /* Deep Teal */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-size: 0.9rem;
+    margin: 5px 0 15px 0;
+    opacity: 0.8;
+}
+
+nav a {
+    color: #e0e0e0;
+    margin: 0 20px;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav a:hover {
+    background-color: #00695c; /* Slightly lighter teal */
+    color: white;
+}
+
+.light-dark-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #ffb300; /* Gold accent */
+    color: #333;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    z-index: 200;
+    font-weight: 700;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.categories {
+    text-align: center;
+    margin: 30px 0;
+    padding: 0 10px;
+}
+
+.categories button {
+    margin: 8px;
+    padding: 12px 25px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background: #ffffff;
+    color: #555;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.2s;
+}
+
+.categories button.active,
+.categories button:hover {
+    background: #ffb300; /* Gold accent */
+    color: #333;
+    border-color: #ffb300;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.dresses {
+    /* Set up for smaller, more numerous boxes */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Further reduced min size */
+    gap: 20px; /* Reduced gap */
+    width: 90%;
+    max-width: 1400px;
+    margin: 40px auto;
+}
+
+.dress-card {
+    background: #ffffff;
+    border-radius: 10px; /* Slight reduction in radius */
+    padding: 15px; /* Reduced padding */
+    height: 180px; /* Fixed small height for uniformity without images */
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08); /* Reduced shadow */
+    cursor: pointer;
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s, background 0.4s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around; /* Space out content vertically */
+    border: 1px solid #eee;
+}
+
+/* Image styles removed */
+.dress-card img {
+    display: none; 
+}
+
+.dress-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; 
+    margin-bottom: 5px;
+    color: #004d40; 
+    letter-spacing: 0.5px;
+}
+
+.dress-card p {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem; 
+    color: #ffb300; 
+    margin-bottom: 10px;
+}
+
+.dress-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    background: #fdfdfd;
+}
+
+.dress-card:hover h3 {
+    color: #00695c; 
+}
+
+.add-cart {
+    width: 90%;
+    padding: 10px 15px; 
+    border: none;
+    border-radius: 25px; 
+    background: #ffb300; 
+    color: #333;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.add-cart:hover {
+    background: #ffa000; 
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+}
+
+/* Cart Sidebar */
+#cartSidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #ffffff;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+    z-index: 1000;
+    border-left: 1px solid #eee;
+}
+
+#cartSidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #004d40;
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+#cartTotal {
+    padding: 20px 25px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #004d40;
+    border-top: 2px solid #ffb300;
+    text-align: right;
+    margin-top: 20px;
+}
+
+.cart-close {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 38px;
+    cursor: pointer;
+    color: #004d40;
+}
+
+/* Creators Section */
+.creators-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 40px 20px;
+    border-top: 2px solid #004d40;
+    text-align: center;
+}
+
+.creators-section h2 {
+    font-family: 'Playfair Display', serif;
+    color: #004d40;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.creators-list {
+    font-size: 1.1rem;
+    padding: 20px 0;
+}
+
+.creator-name {
+    margin: 0 15px;
+    color: #004d40;
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+    background: #1c1c1c;
+    color: #e0e0e0;
+}
+body.dark-mode header {
+    background: #00251a; 
+}
+body.dark-mode .light-dark-toggle {
+    background: #ff8f00; 
+    color: #1c1c1c;
+}
+body.dark-mode .categories button {
+    background: #333;
+    color: #e0e0e0;
+    border-color: #444;
+}
+body.dark-mode .categories button.active,
+body.dark-mode .categories button:hover {
+    background: #ff8f00;
+    color: #1c1c1c;
+    border-color: #ff8f00;
+}
+body.dark-mode .dress-card {
+    background: #2a2a2a;
+    border: 1px solid #3a3a3a;
+}
+body.dark-mode .dress-card h3 {
+    color: #80cbc4; 
+}
+body.dark-mode .dress-card p {
+    color: #ffd740; 
+}
+body.dark-mode .dress-card:hover {
+    background: #3a3a3a;
+}
+body.dark-mode .add-cart {
+    background: #ff8f00;
+    color: #1c1c1c;
+}
+body.dark-mode .add-cart:hover {
+    background: #ff6f00;
+}
+body.dark-mode #cartSidebar {
+    background: #2a2a2a;
+    border-left: 1px solid #3a3a3a;
+}
+body.dark-mode #cartSidebar h2 {
+    color: #80cbc4;
+}
+body.dark-mode #cartTotal {
+    color: #ffd740;
+    border-top: 2px solid #ff8f00;
+}
+body.dark-mode .creators-section {
+    border-top: 2px solid #80cbc4;
+}
+body.dark-mode .creators-section h2 {
+    color: #80cbc4;
+}
+body.dark-mode .creator-name {
+    color: #e0e0e0;
+}
+</style>
+</head>
+<body>
+
+<button class="light-dark-toggle" onclick="toggleDarkMode()">☀️ Light/🌙 Dark</button>
+
+<header>
+    <h1>Fashion Diva</h1>
+    <p>Discover Your Perfect Indian Look</p>
+    <nav>
+        <a href="#dresses">Collection</a>
+        <a href="#categories">Categories</a>
+        <a href="#" onclick="openCart()">🛒 Cart</a>
+        <a href="#creators">Creators</a>
+    </nav>
+</header>
+
+<div class="categories" id="categories">
+    <button class="active" onclick="filterCategory(event, 'all')">All</button>
+    <button onclick="filterCategory(event, 'summer')">Casual Kurta ☀️</button>
+    <button onclick="filterCategory(event, 'wedding')">Bridal Wear 👰</button>
+    <button onclick="filterCategory(event, 'party')">Sangeet/Reception 🥳</button>
+    <button onclick="filterCategory(event, 'formal')">Office Wear 👔</button>
+    <button onclick="filterCategory(event, 'evening')">Elegant Saree 🥂</button>
+</div>
+
+<section class="dresses" id="dresses">
+    <div class="dress-card" data-category="evening">
+        <h3>Ruby Embroidered Saree</h3>
+        <p>$120</p>
+        <button class="add-cart" onclick="addToCart(event,'Ruby Embroidered Saree','$120')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="summer">
+        <h3>Cool Block Print Kurti</h3>
+        <p>$80</p>
+        <button class="add-cart" onclick="addToCart(event,'Cool Block Print Kurti','$80')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="wedding">
+        <h3>Royal Bridal Lehenga</h3>
+        <p>$250</p>
+        <button class="add-cart" onclick="addToCart(event,'Royal Bridal Lehenga','$250')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="party">
+        <h3>Sequin Sangeet Sharara</h3>
+        <p>$95</p>
+        <button class="add-cart" onclick="addToCart(event,'Sequin Sangeet Sharara','$95')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="formal">
+        <h3>Professional Salwar Suit</h3>
+        <p>$150</p>
+        <button class="add-cart" onclick="addToCart(event,'Professional Salwar Suit','$150')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="summer">
+        <h3>Flowy Cotton Anarkali</h3>
+        <p>$75</p>
+        <button class="add-cart" onclick="addToCart(event,'Flowy Cotton Anarkali','$75')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="wedding">
+        <h3>Pastel Groomsmaid Saree</h3>
+        <p>$110</p>
+        <button class="add-cart" onclick="addToCart(event,'Pastel Groomsmaid Saree','$110')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="evening">
+        <h3>Velvet Evening Suit</h3>
+        <p>$180</p>
+        <button class="add-cart" onclick="addToCart(event,'Velvet Evening Suit','$180')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="party">
+        <h3>Bright Silk Ghagra Choli</h3>
+        <p>$85</p>
+        <button class="add-cart" onclick="addToCart(event,'Bright Silk Ghagra Choli','$85')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="formal">
+        <h3>Striped Khadi Kurta Set</h3>
+        <p>$135</p>
+        <button class="add-cart" onclick="addToCart(event,'Striped Khadi Kurta Set','$135')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="summer">
+        <h3>Yellow Cotton Straight-Cut</h3>
+        <p>$65</p>
+        <button class="add-cart" onclick="addToCart(event,'Yellow Cotton Straight-Cut','$65')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="wedding">
+        <h3>Reception Gown Lehenga</h3>
+        <p>$190</p>
+        <button class="add-cart" onclick="addToCart(event,'Reception Gown Lehenga','$190')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="evening">
+        <h3>Georgette Party Saree</h3>
+        <p>$160</p>
+        <button class="add-cart" onclick="addToCart(event,'Georgette Party Saree','$160')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="party">
+        <h3>Fusion Cocktail Dress</h3>
+        <p>$105</p>
+        <button class="add-cart" onclick="addToCart(event,'Fusion Cocktail Dress','$105')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="formal">
+        <h3>Silk Tunic &amp; Pant Set</h3>
+        <p>$140</p>
+        <button class="add-cart" onclick="addToCart(event,'Silk Tunic &amp; Pant Set','$140')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="summer">
+        <h3>Casual Denim Kurta</h3>
+        <p>$55</p>
+        <button class="add-cart" onclick="addToCart(event,'Casual Denim Kurta','$55')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="wedding">
+        <h3>Intricate Lace Saree</h3>
+        <p>$210</p>
+        <button class="add-cart" onclick="addToCart(event,'Intricate Lace Saree','$210')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="evening">
+        <h3>Midas Golden Anarkali</h3>
+        <p>$220</p>
+        <button class="add-cart" onclick="addToCart(event,'Midas Golden Anarkali','$220')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="party">
+        <h3>Classic Red Bandhani Kurta</h3>
+        <p>$70</p>
+        <button class="add-cart" onclick="addToCart(event,'Classic Red Bandhani Kurta','$70')">Add to Cart</button>
+    </div>
+
+    <div class="dress-card" data-category="formal">
+        <h3>Mandarin Collar Suit Set</h3>
+        <p>$175</p>
+        <button class="add-cart" onclick="addToCart(event,'Mandarin Collar Suit Set','$175')">Add to Cart</button>
+    </div>
+</section>
+
+---
+
+<div id="cartSidebar">
+    <span class="cart-close" onclick="closeCart()">×</span>
+    <h2>Your Cart 🛍️</h2>
+    <div id="cartItems"><p style="text-align:center; padding: 20px; color: #777;">Your cart is empty. Start shopping!</p></div>
+    <p id="cartTotal">Total: $0</p>
+</div>
+
+<section class="creators-section" id="creators">
+    <h2>Meet the Creators 🌟</h2>
+    <div class="creators-list">
+        <span class="creator-name">**Jyothi**</span> | 
+        <span class="creator-name">**Gayatri**</span> | 
+        <span class="creator-name">**Charitha**</span> | 
+        <span class="creator-name">**Siri**</span>
+    </div>
+</section>
+<script>
+// Dark mode toggle
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+}
+
+// Check for saved theme preference on load
+(function() {
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+})();
+
+// Filter categories
+function filterCategory(event, category) {
+    const cards = document.querySelectorAll('.dress-card');
+    document.querySelectorAll('.categories button').forEach(btn => btn.classList.remove('active'));
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+
+    cards.forEach(card => {
+        card.style.display = (category === 'all' || card.dataset.category === category) ? 'flex' : 'none';
+    });
+}
+
+// Cart functions
+let cart = [];
+
+function getPriceValue(priceString) {
+    return parseInt(priceString.replace('$', '').trim()) || 0;
+}
+
+function addToCart(e, name, price) {
+    e.stopPropagation();
+    
+    const existingItem = cart.find(item => item.name === name);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({name, price, quantity: 1});
+    }
+
+    renderCart();
+    openCart();
+    
+    // Quick visual feedback
+    const originalText = e.target.innerText;
+    e.target.innerText = 'Added! 👍';
+    e.target.style.backgroundColor = '#004d40'; 
+    e.target.style.color = 'white';
+    setTimeout(() => {
+        e.target.innerText = originalText;
+        e.target.style.backgroundColor = ''; 
+        e.target.style.color = '';
+    }, 800);
+}
+
+function renderCart() {
+    let cartItemsContainer = document.getElementById('cartItems');
+    let total = 0;
+    cartItemsContainer.innerHTML = '';
+    
+    if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p style="text-align:center; padding: 20px; color: #777;">Your cart is empty. Start shopping!</p>';
+    }
+
+    cart.forEach(item => {
+        const itemPriceValue = getPriceValue(item.price);
+        const itemTotal = itemPriceValue * item.quantity;
+        
+        cartItemsContainer.innerHTML += `
+            <div class="cart-item">
+                <p>${item.name} (x${item.quantity})</p>
+                <p>$${itemTotal}</p>
+            </div>
+        `;
+        total += itemTotal;
+    });
+
+    document.getElementById('cartTotal').innerText = 'Total: $'+total;
+}
+
+function openCart() {
+    document.getElementById('cartSidebar').style.width='350px'; 
+}
+
+function closeCart() {
+    document.getElementById('cartSidebar').style.width='0';
+}
+
+renderCart();
+</script>
+
+
+</body></html>
